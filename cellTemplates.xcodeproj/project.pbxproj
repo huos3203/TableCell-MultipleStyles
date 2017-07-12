@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		147F362F1F15DA57007A5F56 /* DRMCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 147F362D1F15DA57007A5F56 /* DRMCell.m */; };
+		147F36351F160F58007A5F56 /* DRMFileListController.m in Sources */ = {isa = PBXBuildFile; fileRef = 147F36331F160F58007A5F56 /* DRMFileListController.m */; };
+		147F36361F160F58007A5F56 /* DRMFileListController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 147F36341F160F58007A5F56 /* DRMFileListController.xib */; };
 		5AA0F5571A3DD5710049A39E /* GlobalCounter.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AA0F5561A3DD5710049A39E /* GlobalCounter.m */; };
 		FF51C12B186BC7F900C67299 /* MyTask.m in Sources */ = {isa = PBXBuildFile; fileRef = FF51C12A186BC7F900C67299 /* MyTask.m */; };
 		FF51C12E186BC96C00C67299 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FF51C12D186BC96C00C67299 /* ViewController.m */; };
@@ -38,6 +41,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		147F362D1F15DA57007A5F56 /* DRMCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DRMCell.m; path = "../../../git-svn/PBBReader_iOS/code/PBB/classes/view/DRMCell.m"; sourceTree = "<group>"; };
+		147F362E1F15DA57007A5F56 /* DRMCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DRMCell.h; path = "../../../git-svn/PBBReader_iOS/code/PBB/classes/view/DRMCell.h"; sourceTree = "<group>"; };
+		147F36321F160F58007A5F56 /* DRMFileListController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DRMFileListController.h; path = DRM/DRMFileListController.h; sourceTree = "<group>"; };
+		147F36331F160F58007A5F56 /* DRMFileListController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = DRMFileListController.m; path = DRM/DRMFileListController.m; sourceTree = "<group>"; };
+		147F36341F160F58007A5F56 /* DRMFileListController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = DRMFileListController.xib; path = DRM/DRMFileListController.xib; sourceTree = "<group>"; };
 		5AA0F5551A3DD5710049A39E /* GlobalCounter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GlobalCounter.h; sourceTree = "<group>"; };
 		5AA0F5561A3DD5710049A39E /* GlobalCounter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GlobalCounter.m; sourceTree = "<group>"; };
 		FF51C129186BC7F900C67299 /* MyTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyTask.h; sourceTree = "<group>"; };
@@ -139,6 +147,11 @@
 				FF51C12D186BC96C00C67299 /* ViewController.m */,
 				5AA0F5551A3DD5710049A39E /* GlobalCounter.h */,
 				5AA0F5561A3DD5710049A39E /* GlobalCounter.m */,
+				147F362E1F15DA57007A5F56 /* DRMCell.h */,
+				147F362D1F15DA57007A5F56 /* DRMCell.m */,
+				147F36321F160F58007A5F56 /* DRMFileListController.h */,
+				147F36331F160F58007A5F56 /* DRMFileListController.m */,
+				147F36341F160F58007A5F56 /* DRMFileListController.xib */,
 			);
 			path = cellTemplates;
 			sourceTree = "<group>";
@@ -249,6 +262,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FF8782F4186B087600C5D702 /* Images.xcassets in Resources */,
+				147F36361F160F58007A5F56 /* DRMFileListController.xib in Resources */,
 				FF8782E6186B087600C5D702 /* InfoPlist.strings in Resources */,
 				FF8782EF186B087600C5D702 /* Main.storyboard in Resources */,
 			);
@@ -274,8 +288,10 @@
 				FF8782EC186B087600C5D702 /* AppDelegate.m in Sources */,
 				5AA0F5571A3DD5710049A39E /* GlobalCounter.m in Sources */,
 				FF8782E8186B087600C5D702 /* main.m in Sources */,
+				147F36351F160F58007A5F56 /* DRMFileListController.m in Sources */,
 				FF878315186B0A8800C5D702 /* CompletedCell.m in Sources */,
 				FF51C12B186BC7F900C67299 /* MyTask.m in Sources */,
+				147F362F1F15DA57007A5F56 /* DRMCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -403,7 +419,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "cellTemplates/cellTemplates-Prefix.pch";
 				INFOPLIST_FILE = "cellTemplates/cellTemplates-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -417,7 +433,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "cellTemplates/cellTemplates-Prefix.pch";
 				INFOPLIST_FILE = "cellTemplates/cellTemplates-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};

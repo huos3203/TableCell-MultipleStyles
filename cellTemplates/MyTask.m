@@ -12,7 +12,7 @@
 
 - (void)start
 {
-    _timer = [NSTimer scheduledTimerWithTimeInterval:0.2 target:self selector:@selector(timerHandler:) userInfo:nil repeats:YES];
+    _timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(timerHandler:) userInfo:nil repeats:YES];
 }
 
 - (void)timerHandler:(NSTimer *)timer
