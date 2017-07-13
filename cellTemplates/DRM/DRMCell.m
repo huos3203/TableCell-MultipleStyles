@@ -45,12 +45,18 @@
 }
 
 - (IBAction)ibRemoveDownQueue:(id)sender {
+    if (_removeDownData) {
+        _removeDownData(self);
+    }
 }
 
 - (IBAction)ibaAddToDownQueueAndSelectForCancel:(id)sender
 {
     //下载队列
-    
+    if (_downListQueueDatas)
+    {
+        _downListQueueDatas(self);
+    }
 }
 
 - (IBAction)ibaSelectForManage:(UIButton *)sender {
@@ -78,6 +84,7 @@
 
 - (void)loadTask:(MyTask*)task
 {
+    self.drmModel = task;
     self.ibFileName.text = task.title;
     self.progressView.progress = task.progress;
 }

@@ -12,7 +12,6 @@
 		14E76DCE1F17123900175BC4 /* DRMCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 14E76DCD1F17123300175BC4 /* DRMCell.m */; };
 		5AA0F5571A3DD5710049A39E /* GlobalCounter.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AA0F5561A3DD5710049A39E /* GlobalCounter.m */; };
 		FF51C12B186BC7F900C67299 /* MyTask.m in Sources */ = {isa = PBXBuildFile; fileRef = FF51C12A186BC7F900C67299 /* MyTask.m */; };
-		FF51C12E186BC96C00C67299 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FF51C12D186BC96C00C67299 /* ViewController.m */; };
 		FF8782DC186B087600C5D702 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF8782DB186B087600C5D702 /* Foundation.framework */; };
 		FF8782DE186B087600C5D702 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF8782DD186B087600C5D702 /* CoreGraphics.framework */; };
 		FF8782E0186B087600C5D702 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF8782DF186B087600C5D702 /* UIKit.framework */; };
@@ -283,7 +282,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FF51C12E186BC96C00C67299 /* ViewController.m in Sources */,
 				FF878312186B0A8000C5D702 /* NormalCell.m in Sources */,
 				FF8782EC186B087600C5D702 /* AppDelegate.m in Sources */,
 				14E76DCE1F17123900175BC4 /* DRMCell.m in Sources */,

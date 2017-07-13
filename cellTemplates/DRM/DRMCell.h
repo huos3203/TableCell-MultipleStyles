@@ -21,6 +21,7 @@ enum DRMTableCellStyles {
 
 @property (weak, nonatomic) IBOutlet UILabel *ibFileName;
 @property (weak, nonatomic) IBOutlet UILabel *ibFileDescription;
+@property (strong, nonatomic) MyTask *drmModel;
 //文件大小
 @property (weak, nonatomic) IBOutlet UILabel *ibFileSizeLabel;
 
@@ -29,7 +30,7 @@ enum DRMTableCellStyles {
 
 @property (weak, nonatomic) IBOutlet UIButton *ibDelSelected;
 @property (nonatomic, copy) void (^SelectedDatas)(DRMCell *);
-@property (nonatomic, copy) void (^downQueueDatas)(DRMCell *);
+@property (nonatomic, copy) void (^downListQueueDatas)(DRMCell *);
 @property (nonatomic, copy) void (^addDownData)(DRMCell *);
 @property (nonatomic, copy) void (^removeDownData)(DRMCell *);
 
