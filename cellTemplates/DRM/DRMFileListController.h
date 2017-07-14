@@ -10,6 +10,7 @@
 //操作: 开始下载/全部下载   ----   取消全部   -----  删除全部/删除所选
 typedef NSUInteger DRMToOperationType;
 enum DRMToOperationType {
+    DRMToDefaultDontOperationType,      //默认无操作状态
     DRMSelectedToOperationStartDown,   //开始下载
     DRMAllToOperationStartDown,        //全部下载
     DRMSelectedToOperationDelete,      //删除所选

@@ -48,10 +48,12 @@ enum DRMTableCellStyles {
 
 //下载列表中的选择按钮的事件
 @property (weak, nonatomic) IBOutlet  UIButton *ibAddToDownQueueButton;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *ibHiddenAddToDownQueueButton;
 - (IBAction)ibaAddToDownQueueAndSelectForCancel:(UIButton *)sender;
 
 //批量处理时的多选框
 @property (weak, nonatomic) IBOutlet UIButton *ibaSelectForManageButton;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *ibHiddenSelectForManageButton;
 - (IBAction)ibaSelectForManage:(UIButton *)sender;
 
 

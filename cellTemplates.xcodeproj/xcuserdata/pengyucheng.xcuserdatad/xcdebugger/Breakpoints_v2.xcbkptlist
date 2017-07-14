@@ -10,28 +10,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "cellTemplates/DRM/DRMFileListController.m"
-            timestampString = "521635980.119275"
+            timestampString = "521699382.083891"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "186"
-            endingLineNumber = "186"
-            landmarkName = "-cellTypeDownListForOperation:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "cellTemplates/DRM/DRMFileListController.m"
-            timestampString = "521635980.119733"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "188"
-            endingLineNumber = "188"
-            landmarkName = "-cellTypeDownListForOperation:"
+            startingLineNumber = "464"
+            endingLineNumber = "464"
+            landmarkName = "-deleteSelected"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

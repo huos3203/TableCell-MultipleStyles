@@ -139,7 +139,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6fg-c6-Es6" userLabel="删除">
-                                                    <rect key="frame" x="9" y="24" width="20" height="22"/>
+                                                    <rect key="frame" x="8" y="24" width="20" height="22"/>
                                                     <state key="normal" image="delSelect">
                                                         <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     </state>
@@ -149,7 +149,7 @@
                                                     </connections>
                                                 </button>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="批量处理样式" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Pj-kh-gdx">
-                                                    <rect key="frame" x="35" y="25" width="104" height="21"/>
+                                                    <rect key="frame" x="34" y="25" width="104" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -163,16 +163,18 @@
                                             </subviews>
                                             <constraints>
                                                 <constraint firstAttribute="trailingMargin" secondItem="MbN-y0-djK" secondAttribute="trailing" id="61Q-18-8iu"/>
+                                                <constraint firstItem="3Pj-kh-gdx" firstAttribute="leading" secondItem="wvF-yT-t2S" secondAttribute="leading" priority="250" constant="8" id="Ajt-3o-0iP"/>
                                                 <constraint firstItem="MbN-y0-djK" firstAttribute="centerY" secondItem="wvF-yT-t2S" secondAttribute="centerY" id="Td0-ur-e2J"/>
                                                 <constraint firstItem="6fg-c6-Es6" firstAttribute="centerY" secondItem="wvF-yT-t2S" secondAttribute="centerY" id="dyZ-4a-vfh"/>
-                                                <constraint firstItem="6fg-c6-Es6" firstAttribute="leading" secondItem="wvF-yT-t2S" secondAttribute="leading" constant="9" id="sie-CU-aXH"/>
-                                                <constraint firstItem="3Pj-kh-gdx" firstAttribute="leading" secondItem="6fg-c6-Es6" secondAttribute="trailing" constant="6" id="tGW-iO-XTU"/>
+                                                <constraint firstItem="6fg-c6-Es6" firstAttribute="leading" secondItem="wvF-yT-t2S" secondAttribute="leading" constant="8" id="sie-CU-aXH"/>
+                                                <constraint firstItem="3Pj-kh-gdx" firstAttribute="leading" secondItem="6fg-c6-Es6" secondAttribute="trailing" priority="750" constant="6" id="tGW-iO-XTU"/>
                                                 <constraint firstItem="3Pj-kh-gdx" firstAttribute="centerY" secondItem="wvF-yT-t2S" secondAttribute="centerY" id="yi3-zj-A0z"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="ibFileName" destination="3Pj-kh-gdx" id="r3s-70-tnl"/>
                                             <outlet property="ibFileSizeLabel" destination="MbN-y0-djK" id="S6u-TT-5aA"/>
+                                            <outlet property="ibHiddenSelectForManageButton" destination="Ajt-3o-0iP" id="Scv-df-u9b"/>
                                             <outlet property="ibaSelectForManageButton" destination="6fg-c6-Es6" id="lEl-ht-ggw"/>
                                         </connections>
                                     </tableViewCell>
@@ -184,7 +186,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GAO-h4-cE7" userLabel="选框">
-                                                    <rect key="frame" x="9" y="24" width="20" height="22"/>
+                                                    <rect key="frame" x="8" y="24" width="20" height="22"/>
                                                     <state key="normal" image="delSelect">
                                                         <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     </state>
@@ -200,7 +202,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="正在下载样式" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="t0a-r9-NsH">
-                                                    <rect key="frame" x="35" y="25" width="104" height="21"/>
+                                                    <rect key="frame" x="34" y="25" width="104" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -219,22 +221,24 @@
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="GAO-h4-cE7" firstAttribute="centerY" secondItem="z6b-bv-usB" secondAttribute="centerY" id="2Wa-Nc-kwg"/>
+                                                <constraint firstItem="t0a-r9-NsH" firstAttribute="leading" secondItem="z6b-bv-usB" secondAttribute="leading" priority="250" constant="8" id="3Os-nt-Z1o"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="ZES-pM-4OT" secondAttribute="trailing" id="6V6-53-bHY"/>
                                                 <constraint firstItem="t0a-r9-NsH" firstAttribute="centerY" secondItem="z6b-bv-usB" secondAttribute="centerY" id="9Oe-jR-HV3"/>
                                                 <constraint firstItem="AHC-MV-Zpb" firstAttribute="leading" secondItem="z6b-bv-usB" secondAttribute="leading" constant="16" id="D9y-6C-2Fw"/>
                                                 <constraint firstAttribute="bottom" secondItem="AHC-MV-Zpb" secondAttribute="bottom" constant="1.5" id="YcC-BA-v4j"/>
                                                 <constraint firstItem="qRt-Dd-ea5" firstAttribute="trailing" secondItem="ZES-pM-4OT" secondAttribute="trailing" id="b7O-QN-Ke9"/>
                                                 <constraint firstAttribute="bottomMargin" secondItem="ZES-pM-4OT" secondAttribute="bottom" constant="4.5" id="gg6-dr-RMb"/>
-                                                <constraint firstItem="GAO-h4-cE7" firstAttribute="leading" secondItem="z6b-bv-usB" secondAttribute="leading" constant="9" id="lIJ-eE-lv6"/>
+                                                <constraint firstItem="GAO-h4-cE7" firstAttribute="leading" secondItem="z6b-bv-usB" secondAttribute="leading" constant="8" id="lIJ-eE-lv6"/>
                                                 <constraint firstItem="ZES-pM-4OT" firstAttribute="top" secondItem="qRt-Dd-ea5" secondAttribute="bottom" constant="6" id="oup-PX-Zxa"/>
                                                 <constraint firstAttribute="trailing" secondItem="AHC-MV-Zpb" secondAttribute="trailing" constant="24" id="pwK-K8-R3s"/>
-                                                <constraint firstItem="t0a-r9-NsH" firstAttribute="leading" secondItem="GAO-h4-cE7" secondAttribute="trailing" constant="6" id="yfy-95-hJO"/>
+                                                <constraint firstItem="t0a-r9-NsH" firstAttribute="leading" secondItem="GAO-h4-cE7" secondAttribute="trailing" priority="750" constant="6" id="yfy-95-hJO"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="ibAddToDownQueueButton" destination="GAO-h4-cE7" id="WWC-5z-I6R"/>
                                             <outlet property="ibFileName" destination="t0a-r9-NsH" id="gAi-pA-lWf"/>
                                             <outlet property="ibFileSizeLabel" destination="ZES-pM-4OT" id="cz4-lT-dq2"/>
+                                            <outlet property="ibHiddenAddToDownQueueButton" destination="3Os-nt-Z1o" id="cZt-0P-mP1"/>
                                             <outlet property="progressView" destination="AHC-MV-Zpb" id="L4w-hA-xhM"/>
                                         </connections>
                                     </tableViewCell>

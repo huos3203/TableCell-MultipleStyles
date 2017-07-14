@@ -16,6 +16,8 @@
 {
     NSMutableArray *_tasks;
     
+    NSMutableArray * _downFinishArray;
+    NSMutableArray * _canDownArray;
     NSMutableArray * _operationArray;  //当前批量操作的数据数组
     NSMutableArray * _batchSourceArray;  //批量处理数据源
 }
@@ -29,14 +31,25 @@
     [super viewDidLoad];
     
     _tasks = [NSMutableArray array];
-    for (int i = 0; i < 20; i++)
+    for (int i = 0; i < 10; i++)
     {
         MyTask *task = [MyTask new];
         task.title = [NSString stringWithFormat:@"任务：%d", i + 1];
         task.taskId = i;
+        task.status = DRMListCellDefaultStyle;
+        [_canDownArray addObject:task];
         [_tasks addObject:task];
     }
-    _listCellStyle = DRMListCellDefaultStyle;
+    
+    for (int i = 10; i < 20; i++) {
+        MyTask *task = [MyTask new];
+        task.title = [NSString stringWithFormat:@"任务：%d", i + 1];
+        task.taskId = i;
+        task.status = DRMListCellFinishStyle;
+        [_downFinishArray addObject:task];
+        [_tasks addObject:task];
+    }
+    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onTaskPrograssChanged:) name:kTASK_PROG_NOTIFICATION object:nil];
 }
 
@@ -65,7 +78,7 @@
     MyTask *task = notification.object;
     NSLog(@"下载进度....%f",task.progress);
     NSInteger row;
-    if (_listCellStyle == DRMListCellDefaultStyle)
+    if (task.status == DRMListCellDefaultStyle)
     {
         row = [_tasks indexOfObject:task];
         
@@ -93,12 +106,11 @@
 {
     //MARK:处于默认list时，当少于6个，隐藏toolbar
     NSInteger numberOfRows = 0;
-    if(_listCellStyle == DRMListCellDefaultStyle)
+    if (!_batchSourceArray)
     {
         numberOfRows = [_tasks count];
         if (numberOfRows < 6)
         {
-            //
             [_ibBottomToolbar setHidden:YES];
             _ibBottomToolBarHeight.constant = 0;
         }
@@ -120,14 +132,14 @@
         task = [_tasks objectAtIndex:indexPath.row];
     }
     DRMCell *cell;
-    switch (_listCellStyle) {
+    switch (task.status) {
         case DRMListCellDefaultStyle:
             //
         {
             cell = [tableView dequeueReusableCellWithIdentifier:@"DRMTableCellDefaultStyle"];
             cell.addDownData = ^(DRMCell *cell){
                 //TODO: 开始下载
-                _listCellStyle = DRMListCellDowningStyle;
+                cell.drmModel.status = DRMListCellDowningStyle;
                 [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
                 [task start];
             };
@@ -157,7 +169,6 @@
         default:
             break;
     }
-    
     [cell loadTask:task];
     return cell;
 }
@@ -166,6 +177,14 @@
 -(DRMCell *)cellTypeDownListForOperation:(MyTask *)task
 {
     DRMCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"DRMTableCellDowningStyle"];
+    if (_operationType == DRMToDefaultDontOperationType) {
+        //
+        cell.ibHiddenSelectForManageButton.priority = 1000;
+        [cell.ibaSelectForManageButton setHidden:YES];
+    }else{
+        cell.ibHiddenSelectForManageButton.priority = 250;
+        [cell.ibaSelectForManageButton setHidden:NO];
+    }
     __weak typeof(self) weakSelf = self;
     cell.downListQueueDatas = ^(DRMCell *cell){
         //添加/移除下载操作数据
@@ -183,12 +202,13 @@
     };
     cell.removeDownData = ^(DRMCell *cell){
         //TODO:取消下载
-        _listCellStyle = DRMListCellDefaultStyle;
+        cell.drmModel.status = DRMListCellSelectAbleStyle;
         [[NSOperationQueue mainQueue] addOperationWithBlock:^{
             NSIndexPath * indexPath = [self.tableView indexPathForCell:cell];
             [weakSelf.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
         }];
     };
+    cell.ibAddToDownQueueButton.selected = NO;
     return cell;
 }
 
@@ -196,6 +216,14 @@
 -(DRMCell *)cellTypeSelectForOperation:(MyTask *)task
 {
     DRMCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"DRMTableCellSelectAbleStyle"];
+    if (_operationType == DRMToDefaultDontOperationType) {
+        //
+        cell.ibHiddenAddToDownQueueButton.priority = 1000;
+        [cell.ibAddToDownQueueButton setHidden:YES];
+    }else{
+        cell.ibHiddenAddToDownQueueButton.priority = 250;
+        [cell.ibAddToDownQueueButton setHidden:NO];
+    }
     //   __unsafe_unretained DRMFileListController *drmFile = self;
     cell.SelectedDatas = ^(DRMCell *cell){
         
@@ -208,7 +236,7 @@
             if (_operationType == DRMAllToOperationCancelDown)
             {
                 //TODO: 将所选文件加入下载队列
-                _listCellStyle = DRMListCellDowningStyle;
+                cell.drmModel.status = DRMListCellDowningStyle;
                 NSIndexPath * indexPath = [self.tableView indexPathForCell:cell];
                 [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
                 [task start];
@@ -252,7 +280,7 @@
         }
         
     };
-    
+    cell.ibaSelectForManageButton.selected = NO;
     return cell;
 }
 
@@ -262,7 +290,12 @@
  - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
  {
      // Return NO if you do not want the specified item to be editable.
-     return YES;
+     DRMCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+     if (cell.drmModel.status == DRMListCellFinishStyle)
+     {
+         return YES;
+     }
+     return NO;
  }
  
 
@@ -272,7 +305,9 @@
      if (editingStyle == UITableViewCellEditingStyleDelete) {
          // Delete the row from the data source
          //TODO: 删除单个文件
-         [_tasks removeObjectAtIndex:indexPath.row];
+         DRMCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+         [_operationArray addObject:cell];
+         [self deleteSelected];
          [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
      }
      else if (editingStyle == UITableViewCellEditingStyleInsert) {
@@ -299,19 +334,26 @@
 - (IBAction)ibaOperationToSelected:(id)sender
 {
     //切换
-    [self switchCellStyle:DRMListCellDefaultStyle toolBarOperation:@""];
+    [self switchToolBarOperation:@""];
     switch (_operationType) {
             
         case DRMAllToOperationDelete:
             //TODO: 删除全部
         {
             [self deleteAll];
+            _operationType = DRMToDefaultDontOperationType;
+            _batchSourceArray = nil;
+            _operationArray = nil;
+            [self.tableView reloadData];
         }
             break;
         case DRMSelectedToOperationDelete:
             //TODO: 删除所选
         {
             [self deleteSelected];
+            _operationType = DRMToDefaultDontOperationType;
+            _batchSourceArray = nil;
+            _operationArray = nil;
             [self.tableView reloadData];
         }
             break;
@@ -321,88 +363,53 @@
         {
             [self downAll];
             //更新toolbar和cell
+            [self switchToolBarOperation:@"取消全部"];
             _operationType = DRMAllToOperationCancelDown;
-            [self switchCellStyle:DRMListCellDowningStyle toolBarOperation:@"取消全部"];
+            [_operationArray removeAllObjects];
             [self.tableView reloadData];
         }
             break;
         case DRMSelectedToOperationStartDown:
             //TODO: 开始下载
         {
-            //TODO:下载功能 更新cell 由下载通知完成
             [self downSelected];
             //更新toolbar和cell
+            [self switchToolBarOperation:@"取消全部"];
             _operationType = DRMAllToOperationCancelDown;
-            [self switchCellStyle:DRMListCellDowningStyle toolBarOperation:@"取消全部"];
+            [_operationArray removeAllObjects];
         }
             break;
         case DRMAllToOperationCancelDown:
-            //TODO: 取消全部
+            //TODO: 取消全部,返回到主页并保持现有状态
         {
             [self cancelAllDowning];
+            _operationType = DRMToDefaultDontOperationType;
+            _batchSourceArray = nil;
+            _operationArray = nil;
             [self.tableView reloadData];
         }
             break;
         default:
             break;
     }
-    
-    _operationArray = nil;
-    
 }
 
-#pragma mark 具体操作实现
--(void)deleteAll
-{
-    [_batchSourceArray removeAllObjects];
-    [self.tableView reloadData];
-}
 
--(void)deleteSelected
-{
-    [_operationArray enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        DRMCell *cell = (DRMCell *)obj;
-        [_batchSourceArray removeObject:cell.drmModel];
-    }];
-}
-
--(void)downAll
-{
-    [_batchSourceArray enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        _listCellStyle = DRMListCellDowningStyle;
-        [self.tableView reloadData];
-        MyTask *task = (MyTask *)obj;
-        [task start];
-    }];
-}
-
--(void)downSelected
-{
-    [_operationArray enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        DRMCell *cell = (DRMCell *)obj;
-        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-             NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
-            [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
-        }];
-        [cell.drmModel start];
-    }];
-}
-
--(void)cancelAllDowning
-{
-    
-}
 //隐藏已下载，更新数据源即可
 - (IBAction)ibaDownByBatch:(UIButton *)sender
 {
     //
     _operationArray = [NSMutableArray array];
     _operationType = DRMAllToOperationStartDown;
-    [self switchCellStyle:DRMListCellSelectAbleStyle toolBarOperation:@"下载全部"];
+    [self switchToolBarOperation:@"下载全部"];
     
     //FIXME: 待替换
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"taskId >= 10"];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"taskId =< 10"];
     _batchSourceArray = [[_tasks filteredArrayUsingPredicate:predicate] mutableCopy];
+    [_batchSourceArray enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        MyTask *task = (MyTask*)obj;
+        task.status = DRMListCellSelectAbleStyle;
+    }];
     [self.tableView reloadData];
 }
 
@@ -411,19 +418,22 @@
 {
     _operationArray = [NSMutableArray array];
     _operationType = DRMAllToOperationDelete;
-    [self switchCellStyle:DRMListCellSelectAbleStyle toolBarOperation:@"删除全部"];
+    [self switchToolBarOperation:@"删除全部"];
     
     //FIXME: 待替换
     //TODO: 过滤未下载数据源
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"taskId =< 10"];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"taskId >= 10"];
     _batchSourceArray = [[_tasks filteredArrayUsingPredicate:predicate] mutableCopy];
+    [_batchSourceArray enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        MyTask *task = (MyTask*)obj;
+        task.status = DRMListCellSelectAbleStyle;
+    }];
     [self.tableView reloadData];
 }
 
 //切换底部toolbar 和 tableCell样式
--(void)switchCellStyle:(DRMListCellStyle)style toolBarOperation:(NSString *)operation
+-(void)switchToolBarOperation:(NSString *)operation
 {
-    _listCellStyle = style;
     if (_ibOperationToSelected.hidden)
     {
         [_ibOperationToSelected setHidden:NO];
@@ -437,6 +447,64 @@
         [_ibDownByBatch setHidden:NO];
         [_ibDeleteBybatch setHidden:NO];
     }
+}
+
+#pragma mark - 具体操作实现
+#pragma mark 删除已下载文件
+-(void)deleteAll
+{
+    [_batchSourceArray enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        [_tasks removeObject:obj];
+    }];
+}
+
+-(void)deleteSelected
+{
+    [_operationArray enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        DRMCell *cell = (DRMCell *)obj;
+//        NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+//        [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+        [_tasks removeObject:cell.drmModel];
+        [_batchSourceArray removeObject:cell.drmModel];
+    }];
+    //指定剩余cell的样式
+    [_batchSourceArray enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        MyTask *task = (MyTask *)obj;
+        task.status = DRMListCellFinishStyle;
+    }];
+}
+
+#pragma mark 下载管理
+-(void)downAll
+{
+    [_batchSourceArray enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        MyTask *task = (MyTask *)obj;
+        task.status = DRMListCellDowningStyle;
+        [task start];
+    }];
+}
+
+-(void)downSelected
+{
+    [_operationArray enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        DRMCell *cell = (DRMCell *)obj;
+        cell.drmModel.status = DRMListCellDowningStyle;
+        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+            NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+            [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+        }];
+        [cell.drmModel start];
+    }];
+}
+
+-(void)cancelAllDowning
+{
+    [_operationArray enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        DRMCell *cell = (DRMCell *)obj;
+        cell.drmModel.status = DRMListCellDefaultStyle;
+        [_batchSourceArray removeObject:cell.drmModel];
+    }];
+    
 }
 @end
 

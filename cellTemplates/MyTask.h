@@ -18,6 +18,7 @@
 @property (assign) int taskId;
 @property (assign) float progress;
 @property (assign) BOOL isCompleted;
+@property(assign)NSInteger status;
 @property (nonatomic, strong) NSString *title;
 
 - (void)start;
