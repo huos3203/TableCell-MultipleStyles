@@ -191,7 +191,7 @@
     DRMCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"DRMTableCellDowningStyle"];
     if (_operationType == DRMToDefaultDontOperationType) {
         //
-        cell.ibHiddenAddToDownQueueButton.priority = UILayoutPriorityDefaultHigh;
+        cell.ibHiddenAddToDownQueueButton.priority = UILayoutPriorityRequired;
         [cell.ibAddToDownQueueButton setHidden:YES];
     }else{
         cell.ibHiddenAddToDownQueueButton.priority = UILayoutPriorityDefaultLow;
@@ -234,7 +234,7 @@
     DRMCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"DRMTableCellSelectAbleStyle"];
     if (_operationType == DRMToDefaultDontOperationType) {
         //
-        cell.ibHiddenSelectForManageButton.priority = UILayoutPriorityDefaultHigh;
+        cell.ibHiddenSelectForManageButton.priority = UILayoutPriorityRequired;
         [cell.ibaSelectForManageButton setHidden:YES];
     }else{
         cell.ibHiddenSelectForManageButton.priority = UILayoutPriorityDefaultLow;
