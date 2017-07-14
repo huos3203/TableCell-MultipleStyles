@@ -185,6 +185,7 @@
         cell.ibHiddenAddToDownQueueButton.priority = 250;
         [cell.ibAddToDownQueueButton setHidden:NO];
     }
+    [cell layoutIfNeeded];
     __weak typeof(self) weakSelf = self;
     cell.downListQueueDatas = ^(DRMCell *cell){
         //添加/移除下载操作数据
@@ -228,7 +229,7 @@
         cell.ibHiddenSelectForManageButton.priority = 250;
         [cell.ibaSelectForManageButton setHidden:NO];
     }
-    
+    [cell layoutIfNeeded];
     //   __unsafe_unretained DRMFileListController *drmFile = self;
     cell.SelectedDatas = ^(DRMCell *cell){
         
@@ -406,15 +407,13 @@
     //
     _operationArray = [NSMutableArray array];
     _operationType = DRMAllToOperationStartDown;
-    [self switchToolBarOperation:@"下载全部"];
-    
-    //FIXME: 待替换
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"taskId =< 10"];
-    _batchSourceArray = [[_tasks filteredArrayUsingPredicate:predicate] mutableCopy];
-    [_batchSourceArray enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        MyTask *task = (MyTask*)obj;
-        task.status = DRMListCellSelectAbleStyle;
-    }];
+    [self getBatchSource];
+    if([_batchSourceArray count] > 0)
+    {
+        [self switchToolBarOperation:@"下载全部"];
+    }else{
+        _batchSourceArray = nil;
+    }
     [self.tableView reloadData];
 }
 
@@ -423,17 +422,34 @@
 {
     _operationArray = [NSMutableArray array];
     _operationType = DRMAllToOperationDelete;
-    [self switchToolBarOperation:@"删除全部"];
-    
-    //FIXME: 待替换
-    //TODO: 过滤未下载数据源
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"taskId >= 10"];
+    [self getBatchSource];
+    if([_batchSourceArray count] > 0)
+    {
+         [self switchToolBarOperation:@"删除全部"];
+    }else{
+        _batchSourceArray = nil;
+    }
+    [self.tableView reloadData];
+}
+
+//批量操作的源数据
+-(NSMutableArray *)getBatchSource
+{
+    //FIXME: 待替换 _tasks和谓词条件
+    NSPredicate *predicate;
+    if (_operationType == DRMAllToOperationDelete) {
+        predicate = [NSPredicate predicateWithFormat:@"status == %d",DRMListCellFinishStyle];
+    } else {
+        NSLog(@"cellStyle==%d",DRMListCellDowningStyle);
+        predicate = [NSPredicate predicateWithFormat:@"status == %d",DRMListCellDefaultStyle];
+    }
     _batchSourceArray = [[_tasks filteredArrayUsingPredicate:predicate] mutableCopy];
     [_batchSourceArray enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         MyTask *task = (MyTask*)obj;
         task.status = DRMListCellSelectAbleStyle;
     }];
-    [self.tableView reloadData];
+    
+    return _batchSourceArray;
 }
 
 //切换底部toolbar 和 tableCell样式
