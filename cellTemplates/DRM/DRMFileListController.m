@@ -194,9 +194,6 @@
         //
         cell.ibHiddenAddToDownQueueButton.priority = UILayoutPriorityRequired;
         [cell.ibAddToDownQueueButton setHidden:YES];
-    }else{
-        cell.ibHiddenAddToDownQueueButton.priority = UILayoutPriorityDefaultLow;
-        [cell.ibAddToDownQueueButton setHidden:NO];
     }
     __weak typeof(self) weakSelf = self;
     cell.downListQueueDatas = ^(DRMCell *cell){
