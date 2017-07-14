@@ -76,9 +76,9 @@
 - (void)onTaskPrograssChanged:(NSNotification *)notification
 {
     MyTask *task = notification.object;
-    NSLog(@"下载进度....%f",task.progress);
+    
     NSInteger row;
-    if (task.status == DRMListCellDefaultStyle)
+    if (_operationType == DRMToDefaultDontOperationType)
     {
         row = [_tasks indexOfObject:task];
         
@@ -87,6 +87,7 @@
     {
         row = [_batchSourceArray indexOfObject:task];
     }
+    NSLog(@"下载进度.... row %ld === %f",(long)row,task.progress);
     NSIndexPath *path = [NSIndexPath indexPathForRow:row inSection:0];
     DRMCell *cell = [self.tableView cellForRowAtIndexPath:path];
     [cell loadTask:task];
