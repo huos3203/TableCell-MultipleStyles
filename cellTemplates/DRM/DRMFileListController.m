@@ -155,6 +155,11 @@
             //取消全部下载，下载队列cell样式
         {
             cell = [self cellTypeDownListForOperation:task];
+            //当进入下载列表时
+            if (_operationType == DRMAllToOperationCancelDown && ![_operationArray containsObject:cell]) {
+                //
+                [_operationArray addObject:cell];
+            }
         }
             break;
         case DRMListCellFinishStyle:
@@ -174,11 +179,7 @@
         DRMCell *cell = (DRMCell *)obj;
         if ([cell.drmModel isEqual:task]) {
             cell.ibAddToDownQueueButton.selected = YES;
-            cell.ibaSelectForManageButton.selected = NO;
-        }else
-        {
-            cell.ibAddToDownQueueButton.selected = NO;
-            cell.ibaSelectForManageButton.selected = NO;
+//            cell.ibaSelectForManageButton.selected = YES;
         }
     }];
     return cell;
@@ -195,11 +196,6 @@
     }else{
         cell.ibHiddenAddToDownQueueButton.priority = UILayoutPriorityDefaultLow;
         [cell.ibAddToDownQueueButton setHidden:NO];
-    }
-    if (_operationType == DRMAllToOperationCancelDown) {
-        //
-        [_operationArray addObject:cell];
-        [cell.ibAddToDownQueueButton setSelected:YES];
     }
     __weak typeof(self) weakSelf = self;
     cell.downListQueueDatas = ^(DRMCell *cell){
@@ -243,6 +239,7 @@
     }else{
         cell.ibHiddenSelectForManageButton.priority = UILayoutPriorityDefaultLow;
         [cell.ibaSelectForManageButton setHidden:NO];
+        [cell.ibaSelectForManageButton setSelected:NO];
     }
     
     //   __unsafe_unretained DRMFileListController *drmFile = self;
@@ -541,7 +538,10 @@
     }];
     [_batchSourceArray enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         MyTask *task = (MyTask *)obj;
-        task.status = DRMListCellDefaultStyle;
+        //未完成的，返回后使用默认的问下在状态。已完成的保持完成样式
+        if (task.status != DRMListCellFinishStyle) {
+            task.status = DRMListCellDefaultStyle;
+        }
     }];
 }
 @end
