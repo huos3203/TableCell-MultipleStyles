@@ -504,7 +504,10 @@
         cell.drmModel.status = DRMListCellDefaultStyle;
         [_batchSourceArray removeObject:cell.drmModel];
     }];
-    
+    [_batchSourceArray enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        MyTask *task = (MyTask *)obj;
+        task.status = DRMListCellDefaultStyle;
+    }];
 }
 @end
 
