@@ -179,11 +179,11 @@
     DRMCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"DRMTableCellDowningStyle"];
     if (_operationType == DRMToDefaultDontOperationType) {
         //
-        cell.ibHiddenSelectForManageButton.priority = 1000;
-        [cell.ibaSelectForManageButton setHidden:YES];
+        cell.ibHiddenAddToDownQueueButton.priority = 1000;
+        [cell.ibAddToDownQueueButton setHidden:YES];
     }else{
-        cell.ibHiddenSelectForManageButton.priority = 250;
-        [cell.ibaSelectForManageButton setHidden:NO];
+        cell.ibHiddenAddToDownQueueButton.priority = 250;
+        [cell.ibAddToDownQueueButton setHidden:NO];
     }
     __weak typeof(self) weakSelf = self;
     cell.downListQueueDatas = ^(DRMCell *cell){
@@ -203,6 +203,10 @@
     cell.removeDownData = ^(DRMCell *cell){
         //TODO:取消下载
         cell.drmModel.status = DRMListCellSelectAbleStyle;
+        if(_operationType == DRMToDefaultDontOperationType)
+        {
+            cell.drmModel.status = DRMListCellDefaultStyle;
+        }
         [[NSOperationQueue mainQueue] addOperationWithBlock:^{
             NSIndexPath * indexPath = [self.tableView indexPathForCell:cell];
             [weakSelf.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
@@ -218,12 +222,13 @@
     DRMCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"DRMTableCellSelectAbleStyle"];
     if (_operationType == DRMToDefaultDontOperationType) {
         //
-        cell.ibHiddenAddToDownQueueButton.priority = 1000;
-        [cell.ibAddToDownQueueButton setHidden:YES];
+        cell.ibHiddenSelectForManageButton.priority = 1000;
+        [cell.ibaSelectForManageButton setHidden:YES];
     }else{
-        cell.ibHiddenAddToDownQueueButton.priority = 250;
-        [cell.ibAddToDownQueueButton setHidden:NO];
+        cell.ibHiddenSelectForManageButton.priority = 250;
+        [cell.ibaSelectForManageButton setHidden:NO];
     }
+    
     //   __unsafe_unretained DRMFileListController *drmFile = self;
     cell.SelectedDatas = ^(DRMCell *cell){
         
