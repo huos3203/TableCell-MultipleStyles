@@ -50,19 +50,24 @@
     }
 }
 
-- (IBAction)ibaAddToDownQueueAndSelectForCancel:(id)sender
+- (IBAction)ibaAddToDownQueueAndSelectForCancel:(UIButton *)sender
 {
     //下载队列
     if (_downListQueueDatas)
     {
+        if (sender.selected)
+        {
+            sender.selected = NO;
+        }else
+        {
+            sender.selected = YES;
+        }
         _downListQueueDatas(self);
     }
 }
 
 - (IBAction)ibaSelectForManage:(UIButton *)sender {
     if (_SelectedDatas) {
-        //        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"删除文件" message:@"一旦删除将无法恢复，确认删除？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确认", nil];
-        //        [alert show];
         if (sender.selected)
         {
             sender.selected = NO;
@@ -72,14 +77,6 @@
         }
         _SelectedDatas(self);
     }
-}
-
--(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    if (buttonIndex==1&&[alertView.title isEqualToString:@"删除文件"]) {
-        _SelectedDatas(self);
-    }
-    
 }
 
 - (void)loadTask:(MyTask*)task

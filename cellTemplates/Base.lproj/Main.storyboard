@@ -4,7 +4,6 @@
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13104.14"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -26,73 +25,8 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="623"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="NormalCell" rowHeight="135" id="y7S-0u-2kn" customClass="NormalCell">
-                                        <rect key="frame" x="0.0" y="22" width="375" height="135"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="y7S-0u-2kn" id="Yi8-B1-fux">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="134.5"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ZUP-HR-4nD">
-                                                    <rect key="frame" x="20" y="112.5" width="335" height="2"/>
-                                                </progressView>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="49w-g1-880">
-                                                    <rect key="frame" x="20" y="18" width="42" height="86.5"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstItem="49w-g1-880" firstAttribute="top" secondItem="Yi8-B1-fux" secondAttribute="top" constant="18" id="CBQ-BE-UVh"/>
-                                                <constraint firstAttribute="bottom" secondItem="ZUP-HR-4nD" secondAttribute="bottom" constant="20" id="F7e-y2-x8h"/>
-                                                <constraint firstAttribute="trailing" secondItem="ZUP-HR-4nD" secondAttribute="trailing" constant="20" id="Jgj-aF-zsS"/>
-                                                <constraint firstItem="ZUP-HR-4nD" firstAttribute="top" secondItem="49w-g1-880" secondAttribute="bottom" constant="8" id="V29-XM-foP"/>
-                                                <constraint firstItem="49w-g1-880" firstAttribute="leading" secondItem="Yi8-B1-fux" secondAttribute="leading" constant="20" id="d4a-o9-0Mm"/>
-                                                <constraint firstItem="ZUP-HR-4nD" firstAttribute="leading" secondItem="Yi8-B1-fux" secondAttribute="leading" constant="20" id="ro0-CK-MB1"/>
-                                            </constraints>
-                                        </tableViewCellContentView>
-                                        <connections>
-                                            <outlet property="progressView" destination="ZUP-HR-4nD" id="iTw-fK-bhb"/>
-                                            <outlet property="titleLabel" destination="49w-g1-880" id="Gvw-Vq-m39"/>
-                                        </connections>
-                                    </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="CompletedCell" rowHeight="158" id="hb1-NW-GZI" customClass="CompletedCell">
-                                        <rect key="frame" x="0.0" y="157" width="375" height="158"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="hb1-NW-GZI" id="iK5-zZ-a1c">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="157.5"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="下载完成" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a0B-Uo-00f">
-                                                    <rect key="frame" x="285.5" y="20" width="69.5" height="117.5"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kJR-Ba-xsB">
-                                                    <rect key="frame" x="20" y="20" width="245.5" height="117.5"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstAttribute="bottom" secondItem="kJR-Ba-xsB" secondAttribute="bottom" constant="20" id="3RB-nk-Zo0"/>
-                                                <constraint firstAttribute="trailing" secondItem="a0B-Uo-00f" secondAttribute="trailing" constant="20" id="Fxd-2R-bmn"/>
-                                                <constraint firstAttribute="bottom" secondItem="a0B-Uo-00f" secondAttribute="bottom" constant="20" id="NgZ-0z-XGt"/>
-                                                <constraint firstItem="a0B-Uo-00f" firstAttribute="leading" secondItem="kJR-Ba-xsB" secondAttribute="trailing" constant="20" id="VLQ-pf-osb"/>
-                                                <constraint firstItem="kJR-Ba-xsB" firstAttribute="leading" secondItem="iK5-zZ-a1c" secondAttribute="leading" constant="20" id="kUH-Ec-QFy"/>
-                                                <constraint firstItem="kJR-Ba-xsB" firstAttribute="top" secondItem="iK5-zZ-a1c" secondAttribute="top" constant="20" id="teC-CI-nkg"/>
-                                                <constraint firstItem="a0B-Uo-00f" firstAttribute="top" secondItem="iK5-zZ-a1c" secondAttribute="top" constant="20" id="yQC-9L-fLV"/>
-                                            </constraints>
-                                        </tableViewCellContentView>
-                                        <connections>
-                                            <outlet property="titleLabel" destination="kJR-Ba-xsB" id="OWD-kZ-XGZ"/>
-                                        </connections>
-                                    </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="DRMTableCellDefaultStyle" id="qSM-k3-Q0s" userLabel="未下载" customClass="DRMCell">
-                                        <rect key="frame" x="0.0" y="315" width="375" height="70"/>
+                                        <rect key="frame" x="0.0" y="22" width="375" height="70"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="qSM-k3-Q0s" id="V6b-rN-Dva">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="69.5"/>
@@ -134,7 +68,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="DRMTableCellSelectAbleStyle" id="HHh-LC-EMH" userLabel="批量处理样式" customClass="DRMCell">
-                                        <rect key="frame" x="0.0" y="385" width="375" height="70"/>
+                                        <rect key="frame" x="0.0" y="92" width="375" height="70"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="HHh-LC-EMH" id="wvF-yT-t2S">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="69.5"/>
@@ -181,7 +115,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="DRMTableCellDowningStyle" id="SJM-3K-mFi" userLabel="正在下载样式" customClass="DRMCell">
-                                        <rect key="frame" x="0.0" y="455" width="375" height="70"/>
+                                        <rect key="frame" x="0.0" y="162" width="375" height="70"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="SJM-3K-mFi" id="z6b-bv-usB">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="69.5"/>
@@ -245,7 +179,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="DRMTableCellFinishStyle" rowHeight="70" id="Y17-8v-8ap" userLabel="下载完成样式" customClass="DRMCell">
-                                        <rect key="frame" x="0.0" y="525" width="375" height="70"/>
+                                        <rect key="frame" x="0.0" y="232" width="375" height="70"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" contentMode="center" tableViewCell="Y17-8v-8ap" id="man-Cx-xUx" userLabel="根单元格">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="69.5"/>

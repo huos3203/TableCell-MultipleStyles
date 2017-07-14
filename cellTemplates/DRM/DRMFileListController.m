@@ -170,6 +170,17 @@
             break;
     }
     [cell loadTask:task];
+    [_operationArray enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        DRMCell *cell = (DRMCell *)obj;
+        if ([cell.drmModel isEqual:task]) {
+            cell.ibAddToDownQueueButton.selected = YES;
+            cell.ibaSelectForManageButton.selected = NO;
+        }else
+        {
+            cell.ibAddToDownQueueButton.selected = NO;
+            cell.ibaSelectForManageButton.selected = NO;
+        }
+    }];
     return cell;
 }
 #pragma mark - 实现几种样式的cell事件
@@ -179,13 +190,17 @@
     DRMCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"DRMTableCellDowningStyle"];
     if (_operationType == DRMToDefaultDontOperationType) {
         //
-        cell.ibHiddenAddToDownQueueButton.priority = 1000;
+        cell.ibHiddenAddToDownQueueButton.priority = UILayoutPriorityDefaultHigh;
         [cell.ibAddToDownQueueButton setHidden:YES];
     }else{
-        cell.ibHiddenAddToDownQueueButton.priority = 250;
+        cell.ibHiddenAddToDownQueueButton.priority = UILayoutPriorityDefaultLow;
         [cell.ibAddToDownQueueButton setHidden:NO];
     }
-    [cell layoutIfNeeded];
+    if (_operationType == DRMAllToOperationCancelDown) {
+        //
+        [_operationArray addObject:cell];
+        [cell.ibAddToDownQueueButton setSelected:YES];
+    }
     __weak typeof(self) weakSelf = self;
     cell.downListQueueDatas = ^(DRMCell *cell){
         //添加/移除下载操作数据
@@ -203,6 +218,7 @@
     };
     cell.removeDownData = ^(DRMCell *cell){
         //TODO:取消下载
+        [_operationArray removeObject:cell];
         cell.drmModel.status = DRMListCellSelectAbleStyle;
         if(_operationType == DRMToDefaultDontOperationType)
         {
@@ -213,7 +229,6 @@
             [weakSelf.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
         }];
     };
-    cell.ibAddToDownQueueButton.selected = NO;
     return cell;
 }
 
@@ -223,13 +238,13 @@
     DRMCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"DRMTableCellSelectAbleStyle"];
     if (_operationType == DRMToDefaultDontOperationType) {
         //
-        cell.ibHiddenSelectForManageButton.priority = 1000;
+        cell.ibHiddenSelectForManageButton.priority = UILayoutPriorityDefaultHigh;
         [cell.ibaSelectForManageButton setHidden:YES];
     }else{
-        cell.ibHiddenSelectForManageButton.priority = 250;
+        cell.ibHiddenSelectForManageButton.priority = UILayoutPriorityDefaultLow;
         [cell.ibaSelectForManageButton setHidden:NO];
     }
-    [cell layoutIfNeeded];
+    
     //   __unsafe_unretained DRMFileListController *drmFile = self;
     cell.SelectedDatas = ^(DRMCell *cell){
         
@@ -286,7 +301,6 @@
         }
         
     };
-    cell.ibaSelectForManageButton.selected = NO;
     return cell;
 }
 
@@ -346,8 +360,8 @@
         case DRMAllToOperationDelete:
             //TODO: 删除全部
         {
-            [self deleteAll];
             _operationType = DRMToDefaultDontOperationType;
+            [self deleteAll];
             _batchSourceArray = nil;
             _operationArray = nil;
             [self.tableView reloadData];
@@ -356,8 +370,8 @@
         case DRMSelectedToOperationDelete:
             //TODO: 删除所选
         {
-            [self deleteSelected];
             _operationType = DRMToDefaultDontOperationType;
+            [self deleteSelected];
             _batchSourceArray = nil;
             _operationArray = nil;
             [self.tableView reloadData];
@@ -367,10 +381,10 @@
         case DRMAllToOperationStartDown:
             //TODO: 下载全部
         {
+            _operationType = DRMAllToOperationCancelDown;
             [self downAll];
             //更新toolbar和cell
             [self switchToolBarOperation:@"取消全部"];
-            _operationType = DRMAllToOperationCancelDown;
             [_operationArray removeAllObjects];
             [self.tableView reloadData];
         }
@@ -378,18 +392,18 @@
         case DRMSelectedToOperationStartDown:
             //TODO: 开始下载
         {
+            _operationType = DRMAllToOperationCancelDown;
             [self downSelected];
             //更新toolbar和cell
             [self switchToolBarOperation:@"取消全部"];
-            _operationType = DRMAllToOperationCancelDown;
             [_operationArray removeAllObjects];
         }
             break;
         case DRMAllToOperationCancelDown:
             //TODO: 取消全部,返回到主页并保持现有状态
         {
-            [self cancelAllDowning];
             _operationType = DRMToDefaultDontOperationType;
+            [self cancelAllDowning];
             _batchSourceArray = nil;
             _operationArray = nil;
             [self.tableView reloadData];
