@@ -325,8 +325,10 @@
          // Delete the row from the data source
          //TODO: 删除单个文件
          DRMCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+         _operationArray = [NSMutableArray array];
          [_operationArray addObject:cell];
          [self deleteSelected];
+         _operationArray = nil;
          [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
      }
      else if (editingStyle == UITableViewCellEditingStyleInsert) {
