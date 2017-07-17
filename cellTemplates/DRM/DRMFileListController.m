@@ -124,6 +124,10 @@
     return numberOfRows;
 }
 
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 50;
+}
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     MyTask *task;
@@ -330,7 +334,13 @@
      }
  }
 
-
+/**
+ *  修改Delete按钮文字为“删除”
+ */
+- (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return @"删除";
+}
 
 /*
  #pragma mark - Navigation
