@@ -49,7 +49,7 @@
         [_downFinishArray addObject:task];
         [_tasks addObject:task];
     }
-    
+    [_ibOperationToSelected setTitle:@"" forState:UIControlStateNormal];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onTaskPrograssChanged:) name:kTASK_PROG_NOTIFICATION object:nil];
 }
 
@@ -488,6 +488,7 @@
         [_ibOperationToSelected setHidden:YES];
         [_ibDownByBatch setHidden:NO];
         [_ibDeleteBybatch setHidden:NO];
+        [_ibOperationToSelected setTitle:@"" forState:UIControlStateNormal];
     }
 }
 
